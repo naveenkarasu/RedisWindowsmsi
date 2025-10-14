@@ -1,0 +1,110 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Redis Windows Backend Configuration",
+  "description": "Configuration for Redis backend (WSL2 or Docker)",
+  
+  "backendType": "WSL2",
+  
+  "wsl": {
+    "distribution": "Ubuntu",
+    "redisPath": "/usr/bin/redis-server",
+    "redisCliPath": "/usr/bin/redis-cli",
+    "configPath": "/etc/redis/redis.conf",
+    "dataPath": "/var/lib/redis",
+    "logPath": "/var/log/redis/redis-server.log",
+    "pidFile": "/var/run/redis/redis-server.pid",
+    "windowsDataPath": "C:\\ProgramData\\Redis\\data",
+    "windowsConfigPath": "C:\\Program Files\\Redis\\conf\\redis.conf",
+    "autoStartOnBoot": true,
+    "healthCheckInterval": 30
+  },
+  
+  "docker": {
+    "imageName": "redis:7.2-alpine",
+    "containerName": "redis-windows",
+    "portMapping": "6379:6379",
+    "volumeMappings": [
+      "C:\\ProgramData\\Redis\\data:/data",
+      "C:\\Program Files\\Redis\\conf\\redis.conf:/usr/local/etc/redis/redis.conf"
+    ],
+    "networkMode": "default",
+    "restartPolicy": "unless-stopped",
+    "autoStartOnBoot": true,
+    "healthCheckInterval": 30,
+    "resourceLimits": {
+      "memory": "512m",
+      "cpus": "1.0"
+    }
+  },
+  
+  "redis": {
+    "port": 6379,
+    "bindAddress": "127.0.0.1",
+    "maxMemory": "512mb",
+    "maxMemoryPolicy": "allkeys-lru",
+    "enablePersistence": true,
+    "persistenceMode": "rdb",
+    "enableAOF": false,
+    "requirePassword": false,
+    "password": "",
+    "logLevel": "notice"
+  },
+  
+  "service": {
+    "serviceName": "Redis",
+    "displayName": "Redis Server",
+    "description": "Redis in-memory data structure store",
+    "startType": "Automatic",
+    "delayedAutoStart": true,
+    "failureActions": {
+      "resetPeriod": 86400,
+      "restartDelay": 60000,
+      "actions": [
+        { "type": "restart", "delay": 60000 },
+        { "type": "restart", "delay": 60000 },
+        { "type": "restart", "delay": 60000 }
+      ]
+    }
+  },
+  
+  "monitoring": {
+    "enableHealthCheck": true,
+    "healthCheckInterval": 30,
+    "healthCheckTimeout": 5,
+    "enableWindowsEventLog": true,
+    "eventLogSource": "Redis Service",
+    "enableFileLogging": true,
+    "logFilePath": "C:\\ProgramData\\Redis\\logs\\service.log",
+    "logLevel": "Info",
+    "maxLogSizeMB": 50,
+    "maxLogFiles": 10
+  },
+  
+  "performance": {
+    "enableAutoRestart": true,
+    "maxRestartAttempts": 3,
+    "restartCooldown": 300,
+    "memoryWarningThreshold": 80,
+    "memoryErrorThreshold": 95,
+    "enableSlowLogMonitoring": true,
+    "slowLogThreshold": 10000
+  },
+  
+  "advanced": {
+    "customStartupArgs": [],
+    "environmentVariables": {},
+    "preStartScript": "",
+    "postStartScript": "",
+    "preStopScript": "",
+    "postStopScript": ""
+  },
+  
+  "metadata": {
+    "configVersion": "1.0.0",
+    "createdBy": "Redis Windows Installer",
+    "createdDate": "",
+    "lastModifiedDate": "",
+    "notes": "This configuration is automatically generated during installation. Modify with caution."
+  }
+}
+
