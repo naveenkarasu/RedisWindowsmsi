@@ -1,0 +1,109 @@
+# Build directories
+build/
+bin/
+obj/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.userprefs
+*.vcxproj.user
+*.vcproj.user
+
+# Visual Studio Code
+.vscode/
+*.code-workspace
+
+# MSI outputs
+*.msi
+*.msm
+*.msp
+*.wixobj
+*.wixpdb
+*.wixlib
+
+# Redis runtime files
+*.rdb
+*.aof
+*.log
+dump.rdb
+appendonly.aof
+
+# Windows
+Thumbs.db
+Desktop.ini
+ehthumbs.db
+$RECYCLE.BIN/
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*~
+
+# NuGet
+packages/
+*.nupkg
+*.snupkg
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# .NET
+*.dll
+*.exe
+!tools/*.exe
+*.pdb
+*.cache
+*.ilk
+*.meta
+*.obj
+*.iobj
+*.pch
+*.ipdb
+*.pgc
+*.pgd
+*.rsp
+*.sbr
+*.tlb
+*.tli
+*.tlh
+*.bak
+*.manifest
+
+# Test results
+TestResults/
+*.trx
+*.coverage
+*.coveragexml
+
+# Logs
+logs/
+*.log
+
+# Environment files
+.env
+.env.local
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# JetBrains Rider
+.idea/
+*.sln.iml
+
+# Local configuration
+appsettings.Development.json
+backend.local.json
+
