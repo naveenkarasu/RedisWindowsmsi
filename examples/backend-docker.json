@@ -1,0 +1,90 @@
+{
+  "SchemaVersion": "1.0.0",
+  "BackendType": "Docker",
+  "Docker": {
+    "ImageName": "redis:7-alpine",
+    "ContainerName": "redis-service",
+    "PortMapping": "6379:6379",
+    "VolumeMappings": [
+      "C:\\ProgramData\\Redis\\data:/data",
+      "C:\\ProgramData\\Redis\\config:/usr/local/etc/redis"
+    ],
+    "ResourceLimits": {
+      "Memory": "1g",
+      "Cpus": "1.0"
+    },
+    "EnvironmentVariables": {},
+    "RestartPolicy": "unless-stopped"
+  },
+  "Redis": {
+    "Port": 6379,
+    "BindAddress": "0.0.0.0",
+    "MaxMemory": "512mb",
+    "PersistenceMode": "rdb",
+    "EnablePersistence": true,
+    "EnableAOF": false,
+    "RequirePassword": true,
+    "Password": "your-secure-password-here",
+    "LogLevel": "notice"
+  },
+  "Service": {
+    "ServiceName": "RedisService",
+    "DisplayName": "Redis Service Wrapper (Docker)",
+    "Description": "Redis service running in Docker container",
+    "StartType": "Automatic",
+    "FailureActions": {
+      "ResetPeriod": 86400,
+      "RestartDelay": 5000,
+      "Actions": [
+        {
+          "Type": "restart",
+          "Delay": 1000
+        },
+        {
+          "Type": "restart",
+          "Delay": 2000
+        },
+        {
+          "Type": "restart",
+          "Delay": 5000
+        }
+      ]
+    }
+  },
+  "Monitoring": {
+    "EnableHealthCheck": true,
+    "HealthCheckInterval": 30,
+    "HealthCheckTimeout": 10,
+    "EnableWindowsEventLog": true,
+    "EventLogSource": "RedisService",
+    "EnableFileLogging": true,
+    "LogFilePath": "C:\\ProgramData\\Redis\\logs\\service.log",
+    "MaxLogSizeMB": 100,
+    "MaxLogFiles": 5,
+    "LogLevel": "Info"
+  },
+  "Performance": {
+    "EnableAutoRestart": true,
+    "MaxRestartAttempts": 3,
+    "RestartCooldown": 30,
+    "MemoryWarningThreshold": 80,
+    "MemoryErrorThreshold": 95,
+    "EnableSlowLogMonitoring": true,
+    "SlowLogThreshold": 10000
+  },
+  "Advanced": {
+    "CustomStartupArgs": [],
+    "EnvironmentVariables": {},
+    "PreStartScript": "",
+    "PostStartScript": "",
+    "PreStopScript": "",
+    "PostStopScript": ""
+  },
+  "Metadata": {
+    "ConfigVersion": "1.0.0",
+    "CreatedBy": "Redis Windows Installer",
+    "CreatedDate": "2024-01-15T10:30:00Z",
+    "LastModifiedDate": "2024-01-15T10:30:00Z",
+    "Description": "Docker Redis configuration for production environment"
+  }
+}

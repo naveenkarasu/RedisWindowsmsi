@@ -1,0 +1,74 @@
+{
+  "SchemaVersion": "1.0.0",
+  "BackendType": "WSL2",
+  "Wsl": {
+    "Distribution": "Ubuntu-22.04",
+    "RedisPath": "/usr/bin/redis-server",
+    "RedisCliPath": "/usr/bin/redis-cli",
+    "WindowsDataPath": "C:\\ProgramData\\Redis\\data",
+    "WindowsConfigPath": "C:\\ProgramData\\Redis\\config"
+  },
+  "Redis": {
+    "Port": 6379,
+    "BindAddress": "127.0.0.1",
+    "MaxMemory": "256mb",
+    "PersistenceMode": "no",
+    "EnablePersistence": false,
+    "EnableAOF": false,
+    "RequirePassword": false,
+    "Password": "",
+    "LogLevel": "notice"
+  },
+  "Service": {
+    "ServiceName": "RedisService",
+    "DisplayName": "Redis Service Wrapper",
+    "Description": "Minimal Redis service configuration",
+    "StartType": "Manual",
+    "FailureActions": {
+      "ResetPeriod": 86400,
+      "RestartDelay": 5000,
+      "Actions": [
+        {
+          "Type": "restart",
+          "Delay": 1000
+        }
+      ]
+    }
+  },
+  "Monitoring": {
+    "EnableHealthCheck": false,
+    "HealthCheckInterval": 30,
+    "HealthCheckTimeout": 10,
+    "EnableWindowsEventLog": true,
+    "EventLogSource": "RedisService",
+    "EnableFileLogging": false,
+    "LogFilePath": "",
+    "MaxLogSizeMB": 100,
+    "MaxLogFiles": 5,
+    "LogLevel": "Info"
+  },
+  "Performance": {
+    "EnableAutoRestart": false,
+    "MaxRestartAttempts": 1,
+    "RestartCooldown": 30,
+    "MemoryWarningThreshold": 90,
+    "MemoryErrorThreshold": 95,
+    "EnableSlowLogMonitoring": false,
+    "SlowLogThreshold": 10000
+  },
+  "Advanced": {
+    "CustomStartupArgs": [],
+    "EnvironmentVariables": {},
+    "PreStartScript": "",
+    "PostStartScript": "",
+    "PreStopScript": "",
+    "PostStopScript": ""
+  },
+  "Metadata": {
+    "ConfigVersion": "1.0.0",
+    "CreatedBy": "Redis Windows Installer",
+    "CreatedDate": "2024-01-15T10:30:00Z",
+    "LastModifiedDate": "2024-01-15T10:30:00Z",
+    "Description": "Minimal Redis configuration for testing and development"
+  }
+}

@@ -1,0 +1,105 @@
+{
+  "SchemaVersion": "1.0.0",
+  "BackendType": "Docker",
+  "Docker": {
+    "ImageName": "redis:7-alpine",
+    "ContainerName": "redis-production",
+    "PortMapping": "6379:6379",
+    "VolumeMappings": [
+      "C:\\ProgramData\\Redis\\data:/data",
+      "C:\\ProgramData\\Redis\\config:/usr/local/etc/redis",
+      "C:\\ProgramData\\Redis\\logs:/var/log/redis"
+    ],
+    "ResourceLimits": {
+      "Memory": "4g",
+      "Cpus": "2.0"
+    },
+    "EnvironmentVariables": {
+      "REDIS_REPLICATION_MODE": "master"
+    },
+    "RestartPolicy": "unless-stopped"
+  },
+  "Redis": {
+    "Port": 6379,
+    "BindAddress": "0.0.0.0",
+    "MaxMemory": "3gb",
+    "PersistenceMode": "both",
+    "EnablePersistence": true,
+    "EnableAOF": true,
+    "RequirePassword": true,
+    "Password": "REDIS_PASSWORD_ENV_VAR",
+    "LogLevel": "warning"
+  },
+  "Service": {
+    "ServiceName": "RedisProduction",
+    "DisplayName": "Redis Production Service",
+    "Description": "Redis service for production environment with high availability",
+    "StartType": "Automatic",
+    "FailureActions": {
+      "ResetPeriod": 86400,
+      "RestartDelay": 10000,
+      "Actions": [
+        {
+          "Type": "restart",
+          "Delay": 5000
+        },
+        {
+          "Type": "restart",
+          "Delay": 10000
+        },
+        {
+          "Type": "restart",
+          "Delay": 30000
+        },
+        {
+          "Type": "run_command",
+          "Delay": 60000
+        }
+      ]
+    }
+  },
+  "Monitoring": {
+    "EnableHealthCheck": true,
+    "HealthCheckInterval": 15,
+    "HealthCheckTimeout": 5,
+    "EnableWindowsEventLog": true,
+    "EventLogSource": "RedisProduction",
+    "EnableFileLogging": true,
+    "LogFilePath": "C:\\ProgramData\\Redis\\logs\\production.log",
+    "MaxLogSizeMB": 500,
+    "MaxLogFiles": 10,
+    "LogLevel": "Warning"
+  },
+  "Performance": {
+    "EnableAutoRestart": true,
+    "MaxRestartAttempts": 5,
+    "RestartCooldown": 60,
+    "MemoryWarningThreshold": 85,
+    "MemoryErrorThreshold": 95,
+    "EnableSlowLogMonitoring": true,
+    "SlowLogThreshold": 5000
+  },
+  "Advanced": {
+    "CustomStartupArgs": [
+      "--appendonly yes",
+      "--appendfsync everysec",
+      "--save 900 1",
+      "--save 300 10",
+      "--save 60 10000"
+    ],
+    "EnvironmentVariables": {
+      "REDIS_PASSWORD_ENV_VAR": "REDIS_PASSWORD_ENV_VAR"
+    },
+    "PreStartScript": "C:\\ProgramData\\Redis\\scripts\\pre-start.bat",
+    "PostStartScript": "C:\\ProgramData\\Redis\\scripts\\post-start.bat",
+    "PreStopScript": "C:\\ProgramData\\Redis\\scripts\\pre-stop.bat",
+    "PostStopScript": "C:\\ProgramData\\Redis\\scripts\\post-stop.bat"
+  },
+  "Metadata": {
+    "ConfigVersion": "1.0.0",
+    "CreatedBy": "Redis Windows Installer",
+    "CreatedDate": "2024-01-15T10:30:00Z",
+    "LastModifiedDate": "2024-01-15T10:30:00Z",
+    "Description": "Production Redis configuration with high availability and monitoring"
+  }
+}
